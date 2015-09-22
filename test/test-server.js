@@ -39,7 +39,7 @@ it('should list ALL exercises on /api/exercises GET', function(done) {
     .end(function(err, res){
       res.should.have.status(200);
       res.should.be.json;
-      console.log(res.body, "resbody get all")
+      console.log(res.body, "resbody get all");
       res.body.should.be.a('array');
       res.body[0].should.have.property('_id');
       res.body[0].should.have.property('name');

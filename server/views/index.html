@@ -7,8 +7,36 @@
 
   <div class="container">
 
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
+    <h2>Student Exercises</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Exercise</label>
+          <input type="text" class="form-control" id="exercise" placeholder="Exercise" name="exercise" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" id="description" placeholder="description" name="description" required>
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags (separate with comma)</label>
+          <input type="text" class="form-control" id="tags"placeholder="Tags" name="tags" required>
+        </div>
+        <button type="submit" class="btn btn-default">Save Exercise</button>
+      </form>
+
+      <br>
+      <p id="message"></p>
+
+      <table class="table table-striped">
+        <thead>
+          <th>Exercise</th>
+          <th>Description</th>
+          <th>Tags</th>
+        </thead>
+        <tbody id="exercise-list">
+        </tbody>
+      </table>
+
 
   </div>
 
