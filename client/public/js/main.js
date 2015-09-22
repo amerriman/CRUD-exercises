@@ -1,13 +1,13 @@
 $(document).on('ready', function() {
-
+  $('#editExercises').hide();
+  listExercises();
 });
 
-//get all the data from the form
+
+//get all the data from the form and create the exercise in the database
 $('form').on('submit', function(e){
   e.preventDefault();
-
   $('#message').html('');
-
   var payload = {
     name: $('#name').val(),
     description: $('#description').val(),
@@ -20,9 +20,59 @@ console.log(payload)
     $('#description').val("");
     $('#tags').val("");
   });
-
   listExercises();
+});
 
+
+$(document).on('click', '.update-btn', function(){
+  var $updtName = $('#nameEdit').val();
+  var $updtDescription = $('#descriptionEdit').val();
+  var $updtTags = $('#tagsEdit').val();
+
+  var payload = {
+    name: $updtName,
+    description: $updtDescription,
+    tags: $updtTags
+  };
+$.ajax({
+  method: "PUT",
+  url: '/api/exercise/'+$(this).attr('id'),
+  data: payload
+}).done(function(data){
+    $("#exercise-list").html("");
+    $('#message').html('Exercise updated!');
+    $('#editExercises').hide();
+    $('#make-exercise').show();
+    listExercises();
+  });
+});
+
+
+//delete an exercise
+$(document).on('click', '.delete-button', function(){
+//delete request to delete the exercise from the database.
+  $.ajax({
+    method: "DELETE",
+    url: '/api/exercise/'+$(this).attr('id')
+  }).done(function(data) {
+    $("#exercise-list").html("");
+    $('#message').html('Exercise deleted!');
+    listExercises();
+  });
+});
+
+
+$(document).on('click', '.edit-button', function(){
+  $.get('/api/exercise/'+$(this).attr('id'), function(data){
+    // $('#edit-title').html('Edit '+data.name);
+    $('#nameEdit').val(data.name);
+    $('#descriptionEdit').val(data.description);
+    $('#tagsEdit').val(data.tags);
+    $('.update-btn').attr('id', data._id);
+    console.log(data);
+  });
+  $('#editExercises').show();
+  $('#make-exercise').hide();
 });
 
 
